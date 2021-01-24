@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import TodoList from './components/TodoList';
-TodoFeture.propTypes = {
+TodoFeature.propTypes = {
 
 };
 
-function TodoFeture(props) {
+function TodoFeature(props) {
     const initToDoList = [
         {
             id: 1,
@@ -64,4 +64,4 @@ function TodoFeture(props) {
     );
 }
 
-export default TodoFeture;
+export default TodoFeature;
