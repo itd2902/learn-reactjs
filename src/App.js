@@ -3,7 +3,7 @@ import TodoFeature from './features/Todo';
 import TodoList from './features/Todo/components/TodoList';
 import Loading from './components/Loading/index';
 import Home from './features/Todo/pages/Home/Home';
-
+import NotFound from './components/NotFound'
 function App() {
   // hook in react-route-dom
   return (
@@ -26,6 +26,7 @@ function App() {
         <Route path="/" component={Home} exact />
         <Route path="/todo-list" component={TodoFeature} />
         <Route path="/loading" component={Loading} />
+        <Route component={NotFound} />
 
       </Switch>
       Footer
