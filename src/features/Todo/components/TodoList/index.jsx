@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import './styles.scss';
@@ -12,15 +12,20 @@ TodoList.defaultProps = {
     onTodoClick: null
 }
 
-function TodoList({ toDoList, onTodoClick }) {
-    console.log('toDoList', toDoList)
+function TodoList({ toDoList, onTodoClick, fetchData }) {
     const handleTodoClick = (todo, idx) => {
         if (!onTodoClick) return;
 
         onTodoClick(todo, idx);
     }
+    useEffect(() => {
+        fetchData("users");
+    }, [fetchData]);
     return (
         <>
+            {
+                console.log("rerender")
+            }
             <p>Quang</p>
             <ul className="todo-list">
                 {toDoList.map((todo, index) =>
@@ -39,4 +44,4 @@ function TodoList({ toDoList, onTodoClick }) {
     );
 }
 
-export default TodoList;
+export default React.memo(TodoList);

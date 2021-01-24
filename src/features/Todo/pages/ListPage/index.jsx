@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom'
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { useHistory, useLocation, useRouteMatch } from 'react-router-dom'
 import TodoList from '../../components/TodoList';
 import queryString from 'query-string';
+import Loading from '../../../../components/Loading';
 ListPage.propTypes = {
 
 };
@@ -25,43 +26,86 @@ function ListPage(props) {
         }
     ]
     const [todoList, settodoList] = useState(initToDoList)
+    const [count, setCount] = useState(0)
     const location = useLocation();
+    const history = useHistory();
+    const match = useRouteMatch();
     const [filteredStatus, setFilteredStatus] = useState(() => {
         const param = queryString.parse(location.search);
         return param.status || 'all'
     });
 
-    const handleTodoClick = (todo, idx) => {
+    useEffect(() => {
+        const queryParams = queryString.parse(location.search);
+        setFilteredStatus(queryParams.status);
+    }, [location.search])
+    const handleTodoClick = useMemo((todo, idx) => {
         // clone current array to the new one
         // must clone object then can change
-        const newTodoList = [...todoList];
+        if (idx) {
+            const newTodoList = [...todoList];
 
-        //toggle state
-        const newTodo = {
-            ...newTodoList[idx],
-            status: newTodoList[idx].status === 'new' ? 'completed' : 'new'
+            //toggle state
+            const newTodo = {
+                ...newTodoList[idx],
+                status: newTodoList[idx].status === 'new' ? 'completed' : 'new'
+            }
+            newTodoList[idx] = newTodo;
+
+            //update todolist
+            settodoList(newTodoList);
         }
-        newTodoList[idx] = newTodo;
-
-        //update todolist
-        settodoList(newTodoList);
+    }, [todoList])
+    const updateQueryPramsToUrl = (params) => {
+        const queryStringParams = { status: params }
+        history.push({
+            pathname: match.path,
+            search: queryString.stringify(queryStringParams)
+        })
     }
     const showAll = () => {
-        setFilteredStatus('all');
+        // setFilteredStatus('all');
+        //update param 'all' to route
+        updateQueryPramsToUrl('all')
     }
     const showCompleted = () => {
-        setFilteredStatus('completed');
+        // setFilteredStatus('completed');
+        updateQueryPramsToUrl('completed')
     }
     const showNew = () => {
-        setFilteredStatus('new');
+        // setFilteredStatus('new');
+        updateQueryPramsToUrl('new')
     }
-    const renderListToDo = todoList.filter(x => filteredStatus === 'all'
-        || x.status == filteredStatus)
+    // const renderListToDo = todoList.filter(x => {
+    //     return filteredStatus === 'all'
+    //         || x.status == filteredStatus;
+    // });
+    const renderListToDo = useMemo(() => {
+        return todoList.filter(x => {
+            console.log("load");
+            return filteredStatus === 'all'
+                || x.status == filteredStatus;
+        })
+    }, [todoList, filteredStatus])
+    const click = () => {
+        setCount(count + 1)
+    }
+
+    const fetchData = useCallback(type => {
+        return fetch(`https://jsonplaceholder.typicode.com/${type}`)
+            .then(response => response.json())
+            .then(json => console.log(json))
+    }, []);
+    useEffect(() => {
+        fetchData("todos")
+    }, [])
+
     return (
         <div>
             <p>Todo List</p>
-            <TodoList toDoList={renderListToDo} onTodoClick={handleTodoClick} />
+            <TodoList toDoList={renderListToDo} onTodoClick={handleTodoClick} fetchData={fetchData} />
             <div>
+                <button onClick={click}>Click : {count}</button>
                 <button onClick={showAll}>Show all</button>
                 <button onClick={showCompleted}>Show completed</button>
                 <button onClick={showNew}>Show new</button>
