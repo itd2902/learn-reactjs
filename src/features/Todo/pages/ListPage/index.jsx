@@ -3,6 +3,7 @@ import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 import TodoList from '../../components/TodoList';
 import queryString from 'query-string';
 import Loading from '../../../../components/Loading';
+import TodoForm from '../../components/TodoForm';
 ListPage.propTypes = {};
 
 function ListPage(props) {
@@ -102,6 +103,7 @@ function ListPage(props) {
 
    return (
       <div>
+         <TodoForm />
          <p>Todo List</p>
          <TodoList toDoList={renderListToDo} onTodoClick={handleTodoClick} fetchData={fetchData} />
          <div>
