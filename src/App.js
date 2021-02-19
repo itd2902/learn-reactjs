@@ -6,6 +6,7 @@ import Loading from './components/Loading/index';
 import Home from './features/Todo/pages/Home/Home';
 import NotFound from './components/NotFound';
 import productApi from './api/productApi';
+import CounterFeature from './features/Counter/index';
 function App() {
    // hook in react-route-dom
    // eslint-disable-next-line no-undef
@@ -21,7 +22,7 @@ function App() {
    }, []);
    return (
       <div className="App">
-         Header
+         {/* Header */}
          {/* <Link to="/todo">Todo</Link> */}
          {/* Navlink có thêm class active */}
          <p>
@@ -43,11 +44,11 @@ function App() {
        */}
 
             <Route path="/" component={Home} exact />
-            <Route path="/todo-list" component={TodoFeature} />
-            <Route path="/loading" component={Loading} />
-            <Route component={NotFound} />
+            <Route path="/todo-list" component={CounterFeature} />
+            {/* <Route path="/loading" component={Loading} />
+            <Route component={NotFound} /> */}
          </Switch>
-         Footer
+         {/* Footer */}
       </div>
    );
 }
