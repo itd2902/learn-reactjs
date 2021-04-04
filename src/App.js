@@ -7,6 +7,7 @@ import Home from './features/Todo/pages/Home/Home';
 import NotFound from './components/NotFound';
 import productApi from './api/productApi';
 import CounterFeature from './features/Counter/index';
+import Header from 'features/Header/Header';
 function App() {
    // hook in react-route-dom
    // eslint-disable-next-line no-undef
@@ -23,19 +24,7 @@ function App() {
    return (
       <div className="App">
          {/* Header */}
-         {/* <Link to="/todo">Todo</Link> */}
-         {/* Navlink có thêm class active */}
-         <p>
-            <NavLink to="/todo-list" activeClassName="active-menu">
-               Todo
-            </NavLink>
-         </p>
-         <p>
-            <NavLink to="/loading">Loading</NavLink>
-         </p>
-         {/* Chỉ match với thằng đàu tiên có path được match */}
-         {/* <Redirect from="/home" to="/todo"></Redirect> */}
-         <p>Đây là trang</p>
+         <Header />
          <Switch>
             {/* 
           - Mặc định exact = false map với startWith ví dụ /todos match với /todos/123
@@ -45,8 +34,7 @@ function App() {
 
             <Route path="/" component={Home} exact />
             <Route path="/todo-list" component={CounterFeature} />
-            {/* <Route path="/loading" component={Loading} />
-            <Route component={NotFound} /> */}
+            <Route path="/loading" component={Loading} />
          </Switch>
          {/* Footer */}
       </div>
