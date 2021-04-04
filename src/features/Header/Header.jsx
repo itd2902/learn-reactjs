@@ -8,6 +8,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import CodeIcon from '@material-ui/icons/Code';
 import MenuIcon from '@material-ui/icons/Menu';
+import Register from 'features/Auth';
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
@@ -65,17 +66,11 @@ export default function Header() {
                </Button>
             </Toolbar>
          </AppBar>
-         <Dialog
-            disableBackdropClick
-            disableEscapeKeyDown
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-         >
-            <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+         <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
             <DialogContent>
-               <DialogContentText id="alert-dialog-description">Register form</DialogContentText>
+               <DialogContentText id="alert-dialog-description">
+                  <Register />
+               </DialogContentText>
             </DialogContent>
             <DialogActions>
                <Button onClick={handleClose} color="primary">

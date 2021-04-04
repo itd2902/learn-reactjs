@@ -22,6 +22,8 @@ function InputField(props) {
          label={label}
          control={form.control}
          as={TextField}
+         variant="outlined"
+         margin="normal"
          disabled={disabled}
          fullWidth
          error={!!hasError}
